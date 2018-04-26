@@ -1,0 +1,39 @@
+
+Sub replace()
+
+Dim CellName As String
+Dim ColName1 As String
+Dim ColName2 As String
+Dim crange As String
+
+ColName1 = "CM"
+ColName2 = NextColumn(ColName1)
+
+crange = ColName1 + "4:" + ColName1 + "854"
+
+'肌色セル
+CellName = ColName2 + "4"
+
+    Range(crange).Select
+    Selection.Copy
+    Range(CellName).Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+
+End Sub
+
+Function NextColumn(ByVal yname As String) As String
+
+    Dim str As String
+    Dim cnum As Long
+    '引数列の列番号を取得
+    cnum = Range(yname + ":" + yname).Column & Chr(13)
+    
+    '引数の列番号＋1の列名を取得
+    str = Split(Cells(, cnum + 1).Address, "$")(1)
+    
+    Debug.Print str
+    'returnを使わずに関数名に返り値を渡す（気持ち悪い）
+    NextColumn = str
+ 
+End Function
